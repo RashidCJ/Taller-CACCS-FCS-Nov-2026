@@ -1,0 +1,595 @@
+---
+title: "Primeros pasos en R y RStudio"
+subtitle: "Taller Introducción a R<br>Centro Académico de Cómputos, Facultad de Ciencias Sociales"
+author:
+  - name: "Dr. Rashid C. J. Marcano Rivera"
+    affiliation: "Departamento de Sociología y Antropología<br>Facultad de Ciencias Sociales, UPR-RP"
+date: 2026-11-13
+lang: es
+date-format: long
+format:
+  revealjs:
+    theme: [default, uprrp.scss]
+    slide-number: true
+    chalkboard: false
+    logo: "logos_combinados.png"
+    footer: "Taller Introducción a R, CACCS, Facultad de Ciencias Sociales, UPR-RP"
+    transition: slide
+    background-transition: fade
+    highlight-style: github
+    code-tools: true
+    fig-align: center
+    incremental: false
+    scrollable: true
+    embed-resources: true
+knitr:
+  opts_chunk:
+    collapse: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: preparación
+#| include: false
+set.seed(42)
+library(tidyverse)
+library(dslabs)
+data(gapminder)
+```
+
+# Bienvenida {background-color="#e70033"}
+
+## Sobre este taller
+
+**Viernes 13 de noviembre de 2026, de 8:00 a 10:00, salón 118**
+
+| Hora | Parte |
+|------|-------|
+| 8:00 a 8:30 | **Panorama:** qué es R y para qué se usa |
+| 8:30 a 9:50 | **Manos a la obra:** paso a paso en RStudio |
+| 9:50 a 10:00 | Cierre, recursos y preguntas |
+
+. . .
+
+Seguimos dos libros gratuitos en español:
+
+- Wickham, Çetinkaya-Rundel y Grolemund, [*R para la Ciencia de Datos*](https://davidrsch.github.io/r4ds-es/), 2.ª edición
+- Irizarry, [*Introducción a la ciencia de datos*](https://rafalab.dfci.harvard.edu/dslibro/)
+
+::: {.notes}
+Buenos días. Antes de empezar quiero saber quiénes han usado R alguna vez, quiénes han usado SPSS, Stata o Excel para analizar datos, y quiénes nunca han escrito código. Las dos horas tienen dos partes: media hora para ver qué es R y qué se puede hacer con él, y el resto para trabajar juntos, paso a paso, en las computadoras. Todo lo que hagamos sale de dos libros gratuitos en español que les recomiendo para seguir por su cuenta.
+:::
+
+# Parte I: panorama {background-color="#e70033"}
+
+## R, RStudio y Quarto {.smaller}
+
+| Herramienta | ¿Qué es? |
+|-------------|----------|
+| **R** | El lenguaje de programación (el motor) |
+| **RStudio** | La interfaz que facilita usar R (el tablero) |
+| **Quarto** | El sistema para crear documentos que combinan texto, código y resultados |
+
+. . .
+
+- R es **gratuito** y de código abierto.
+- Hoy hay **25,736 paquetes** en CRAN, el repositorio oficial: cada uno añade herramientas para una tarea.
+- RStudio, de la empresa Posit, también es gratuito. [Posit Cloud](https://posit.cloud/) permite usarlo desde el navegador.
+
+::: {.notes}
+Piensen en R como el motor de un carro y en RStudio como el tablero con todos los controles. Se puede manejar R sin RStudio, pero casi nadie lo hace. Los paquetes son lo que hace de R una herramienta tan amplia: alguien ya escribió funciones para leer datos del Censo, hacer mapas o analizar textos, y las comparte gratis.
+:::
+
+## ¿Por qué R en ciencias sociales?
+
+- **Reproducibilidad:** cada paso queda escrito en un *script* que otra persona, o ustedes dentro de un año, puede volver a correr.
+- **Costo:** no requiere licencia, ni en la UPR ni después de graduarse.
+- **Amplitud:** estadística, gráficos, mapas, textos y documentos en un mismo lugar.
+- **Comunidad:** libros, foros y materiales gratuitos, muchos en español.
+
+::: {.notes}
+Lo más importante de esta lista es la reproducibilidad. Cuando uno analiza datos con menús y clics, el camino se pierde; con un script, el análisis completo queda escrito y se puede repetir, corregir y compartir.
+:::
+
+## Lo que se puede hacer con R {.smaller}
+
+| Tarea | Paquetes |
+|-------|----------|
+| Leer encuestas de SPSS, Stata y Excel | `haven`, `readxl` |
+| Bajar datos del Censo y la ACS de Puerto Rico | `tidycensus` |
+| Limpiar y transformar datos | `dplyr`, `tidyr` (del `tidyverse`) |
+| Gráficos de calidad para publicación | `ggplot2` |
+| Mapas y análisis espacial | `sf` |
+| Análisis de textos | `tidytext`, `quanteda` |
+| Recoger datos de páginas web | `rvest` |
+| Aplicaciones interactivas | `shiny` |
+
+::: {.notes}
+Esta tabla no es para memorizarla. Es para que sepan que, si mañana tienen que hacer un mapa por municipio o analizar discursos, eso también se hace en R. Hoy vamos a tocar solo la limpieza y los gráficos, que es la base de todo lo demás.
+:::
+
+## Quarto: un archivo, muchos formatos
+
+Un documento de Quarto (`.qmd`) mezcla texto y código. Al **renderizarlo**, R corre el código y pega los resultados:
+
+````markdown
+---
+title: "Mi primer informe"
+format: html
+---
+
+La esperanza de vida promedio en 2010 fue de
+`r knitr::inline_expr("round(mean(gapminder$life_expectancy[gapminder$year == 2010]), 1)")` años.
+
+```{{r}}
+ggplot(gapminder, aes(fertility, life_expectancy)) + geom_point()
+```
+````
+
+. . .
+
+El mismo archivo produce **HTML, PDF, Word, presentaciones, sitios web y libros**. Esta presentación es un `.qmd`, y los dos libros que seguimos también están hechos con estas herramientas.
+
+::: {.notes}
+Quarto resuelve un problema que todos conocemos: copiar una tabla de un programa a Word y, cuando cambian los datos, tener que copiarla otra vez. Aquí el número del texto se calcula al renderizar, así que si los datos cambian, el informe se actualiza solo. Al final de la parte práctica vamos a crear uno.
+:::
+
+## Git y GitHub: control de versiones
+
+- **Git** guarda un historial de los cambios de sus archivos: quién cambió qué, cuándo y por qué.
+- **GitHub** guarda ese historial en la nube, para respaldar y colaborar.
+- RStudio trae un panel de Git integrado: *commit* para guardar una versión, *push* para subirla.
+
+. . .
+
+Los materiales de mis talleres anteriores están en GitHub:
+
+- [Taller del CACCS, abril de 2026](https://github.com/RashidCJ/Taller-CACCS-FCS-Abr-2026)
+- [Taller del CRiiAS, febrero de 2026](https://github.com/RashidCJ/Taller-R-CRiiAS-UPRRP-Feb-2026)
+
+Guía recomendada: [*Happy Git and GitHub for the useR*](https://happygitwithr.com/) (en inglés) y el capítulo 39 de Irizarry.
+
+::: {.notes}
+Git sustituye la costumbre de guardar «tesis_final», «tesis_final2» y «tesis_final_ahora_sí». Cada versión queda guardada con una nota, y se puede volver atrás. Hoy no lo vamos a configurar, porque toma tiempo, pero si queda tiempo al final les enseño cómo se ve en RStudio.
+:::
+
+## Proyectos de RStudio
+
+Un **proyecto** (`.Rproj`) es una carpeta con todo lo de un trabajo: datos, scripts, documentos y resultados.
+
+- Al abrir el proyecto, R sabe dónde están los archivos: no hacen falta rutas como `C:/Users/...`.
+- Cada trabajo queda separado de los demás.
+- Funciona igual en cualquier computadora, y se conecta con Git.
+
+::: {.notes}
+Este es el hábito que más problemas les va a ahorrar. La mayoría de los errores de principiante son de rutas: R no encuentra el archivo porque está buscando en otra carpeta. Con un proyecto, eso se resuelve desde el principio.
+:::
+
+## Si han usado SPSS, Stata o Excel {.smaller}
+
+| | SPSS / Stata | Excel | R |
+|---|---|---|---|
+| Costo | Licencia | Licencia | Gratuito |
+| Registro del análisis | Sintaxis (opcional) | No | *Script* (siempre) |
+| Gráficos | Limitados | Básicos | Muy flexibles |
+| Mapas, textos, web | No | No | Sí |
+
+. . .
+
+R lee directamente los archivos `.sav` y `.dta`, con sus etiquetas de variables y valores.
+
+::: {.notes}
+No se trata de abandonar lo que saben. Si han trabajado con la sintaxis de SPSS o los do-files de Stata, ya entienden la lógica del script. R lee esos archivos directamente, así que pueden empezar con sus propios datos.
+:::
+
+## Sobre aprender R
+
+- Los errores son normales: el mensaje de error trae información, hay que leerlo.
+- Se aprende copiando, modificando y rompiendo código.
+
+. . .
+
+::: callout-tip
+### Cuando se atasquen
+
+- `?función` o `help(función)`: la ayuda de R
+- Las [hojas de referencia de Posit](https://rstudio.github.io/cheatsheets/), varias en español
+- Los capítulos de *R para la Ciencia de Datos* y de Irizarry
+:::
+
+::: {.notes}
+Les va a salir un error en los próximos minutos, y está bien. Lo que distingue a quien aprende R de quien se rinde es leer el mensaje en lugar de cerrar el programa.
+:::
+
+# Parte II: manos a la obra {background-color="#e70033"}
+
+## Paso 1: RStudio por dentro
+
+Abran RStudio. Tiene cuatro paneles:
+
+- **Fuente** (arriba a la izquierda): scripts y documentos
+- **Consola** (abajo a la izquierda): donde R ejecuta el código
+- **Ambiente** (arriba a la derecha): los objetos en memoria
+- **Archivos, gráficos y ayuda** (abajo a la derecha)
+
+. . .
+
+::: callout-important
+### Una configuración, una sola vez
+
+*Tools → Global Options → General*: desmarquen «Restore .RData into workspace at startup» y escojan «Never» en «Save workspace to .RData on exit». Así cada sesión empieza limpia (recomendación de Irizarry, capítulo 1).
+:::
+
+::: {.notes}
+Vamos a hacer esto juntos. Abran RStudio y busquen los cuatro paneles. Después vamos a Tools, Global Options, y quitamos que R guarde y restaure el espacio de trabajo. Parece un detalle, pero evita que arrastren objetos viejos de una sesión a otra sin darse cuenta.
+:::
+
+## Paso 2: crear un proyecto
+
+1. *File → New Project → New Directory → New Project*
+2. Nombre: `taller_r`. Ubicación: el Escritorio o Documentos.
+3. *Create Project*
+
+. . .
+
+Noten que RStudio se reinicia y que el panel de archivos muestra la carpeta nueva, con el archivo `taller_r.Rproj`.
+
+::: {.notes}
+Todos van a crear el mismo proyecto. Cuando terminen, el panel de abajo a la derecha debe mostrar la carpeta taller_r. Si alguien se queda atrás, levanten la mano y paso por su computadora.
+:::
+
+## Paso 3: R como calculadora
+
+Escriban en la **consola** y opriman *Enter*:
+
+```{r}
+#| label: calculadora
+1 + 2
+13 / 2
+2 ^ 6
+sqrt(81)
+```
+
+::: {.notes}
+Empezamos por lo más simple. El acento circunflejo es el exponente y sqrt es la raíz cuadrada. Prueben sus propias operaciones.
+:::
+
+## Paso 4: un script
+
+*File → New File → R Script*, y guárdenlo como `primeros_pasos.R`.
+
+- Escriban el código en el script y ejecútenlo con **Ctrl + Enter** (Windows) o **Cmd + Return** (Mac).
+- Lo que va después de `#` es un **comentario**: R no lo ejecuta.
+
+```{r}
+#| label: comentarios
+# Esto es un comentario: sirve para explicar el código
+10 * 3   # también puede ir al final de una línea
+```
+
+::: {.notes}
+A partir de aquí todo lo escribimos en el script, no en la consola. La consola es para probar; el script es lo que queda. Comenten su código: dentro de un mes no van a recordar por qué hicieron lo que hicieron.
+:::
+
+## Paso 5: objetos
+
+Los **objetos** guardan valores para reutilizarlos. La flecha `<-` asigna:
+
+```{r}
+#| label: objetos
+x <- 4
+x + 2
+
+isla <- "Puerto Rico"   # texto, entre comillas
+isla
+
+bilingüe <- TRUE        # valor lógico
+bilingüe
+```
+
+. . .
+
+::: callout-tip
+### Buenas prácticas
+Nombres descriptivos y sin espacios: `edad_participante` es mejor que `x`. R acepta tildes y eñes en los nombres.
+:::
+
+::: {.notes}
+Lean la flecha como «x recibe cuatro». Cuando escriben solo el nombre del objeto, R muestra lo que tiene guardado. Fíjense en el panel de Ambiente: ahí aparecen los objetos que acabamos de crear.
+:::
+
+## Paso 6: vectores y funciones
+
+`c()` junta valores en un **vector**. Las **funciones** reciben datos y devuelven un resultado:
+
+```{r}
+#| label: vectores
+edades <- c(23, 31, 27, 45, 38, 22, 29)
+
+mean(edades)    # media
+sd(edades)      # desviación estándar
+range(edades)   # mínimo y máximo
+length(edades)  # cuántos valores hay
+```
+
+. . .
+
+Prueben `?mean` para ver la ayuda, y `mean("texto")` para ver un error.
+
+::: {.notes}
+Casi todo en R es una función con paréntesis. Ahora provoquemos un error a propósito: mean con un texto. R les dice que el argumento no es numérico. Eso es lo que hay que aprender a leer.
+:::
+
+## Su turno (5 minutos)
+
+1. Creen un vector `horas_sueño` con siete valores, uno por día de la semana.
+2. Calculen la media, el mínimo (`min()`) y el máximo (`max()`).
+3. Redondeen la media a un decimal con `round()`. Busquen en `?round` cómo indicar los decimales.
+
+::: {.notes}
+Trabajen en parejas si quieren. Lo importante es que escriban el código en el script y lo ejecuten. Voy a pasar por las mesas.
+:::
+
+## Paso 7: paquetes
+
+Se **instalan una vez** con `install.packages()` y se **cargan en cada sesión** con `library()`:
+
+```{r}
+#| label: paquetes
+#| eval: false
+install.packages(c("tidyverse", "dslabs"))   # una sola vez
+```
+
+```{r}
+#| label: cargar
+library(tidyverse)  # colección de paquetes para ciencia de datos
+library(dslabs)     # datos del libro de Irizarry
+data(gapminder)
+```
+
+::: {.notes}
+Instalar un paquete es como bajar una aplicación al teléfono, y cargarlo con library es como abrirla. En estas computadoras ya deben estar instalados; si a alguien le dice que no existe el paquete, corremos la instalación.
+:::
+
+## Paso 8: mirar los datos
+
+`gapminder` tiene datos de unos 185 países de 1960 a 2016: población, esperanza de vida, fertilidad y PIB.
+
+```{r}
+#| label: vistazo
+glimpse(gapminder)
+```
+
+. . .
+
+También prueben `head(gapminder)`, `summary(gapminder)` y `View(gapminder)`.
+
+::: {.notes}
+Lo primero con cualquier conjunto de datos es mirarlo. glimpse muestra cada variable con su tipo: dbl es numérico, fct es un factor, es decir, una variable categórica. View abre los datos como una hoja de cálculo, solo para mirar.
+:::
+
+## Tipos de datos
+
+| Tipo | Descripción | Ejemplo |
+|------|-------------|---------|
+| **Numérico** | Números enteros y decimales | `42`, `3.14` |
+| **Caracter** | Texto entre comillas | `"Puerto Rico"` |
+| **Lógico** | Verdadero o falso | `TRUE`, `FALSE` |
+| **Factor** | Categorías con niveles | `continent` |
+
+::: {.notes}
+El tipo importa porque determina qué se puede hacer con la variable: no se saca un promedio de un texto. Los factores son las variables categóricas, como el continente o el nivel educativo.
+:::
+
+## Paso 9: transformar con `dplyr`
+
+| Función | ¿Qué hace? |
+|---------|-------------|
+| `filter()` | Escoge **filas** según una condición |
+| `select()` | Escoge **columnas** |
+| `arrange()` | Ordena las filas |
+| `mutate()` | Crea o modifica variables |
+| `group_by()` + `summarise()` | Resume por grupos |
+
+. . .
+
+El *pipe* `|>` encadena pasos: «toma esto, **luego** haz aquello». Atajo: **Ctrl + Shift + M** (o **Cmd + Shift + M**).
+
+::: {.notes}
+Estas cinco funciones son verbos. Con ellas se hace la gran mayoría de la limpieza de datos. El pipe permite leer el código de arriba hacia abajo, como una receta.
+:::
+
+## Puerto Rico en el Caribe
+
+```{r}
+#| label: filtrar
+gapminder |>
+  filter(country %in% c("Puerto Rico", "Cuba", "Dominican Republic", "Jamaica"),
+         year %in% c(1970, 1990, 2010)) |>
+  select(country, year, life_expectancy, fertility) |>
+  arrange(year, country)
+```
+
+::: {.notes}
+Léanlo en voz alta conmigo: toma gapminder, luego filtra estos países y estos años, luego escoge estas columnas, luego ordena por año y país. El signo %in% quiere decir «que esté en esta lista».
+:::
+
+## Crear variables y resumir por grupos
+
+```{r}
+#| label: resumir
+gapminder |>
+  filter(year == 2010) |>
+  mutate(pib_per_cápita = gdp / population) |>
+  group_by(continent) |>
+  summarise(esperanza_media = mean(life_expectancy, na.rm = TRUE),
+            pib_mediano = median(pib_per_cápita, na.rm = TRUE),
+            países = n())
+```
+
+::: {.notes}
+mutate crea la variable de PIB per cápita. group_by separa los datos por continente y summarise calcula una cifra para cada grupo. El na.rm = TRUE le dice a R que ignore los valores faltantes; sin eso, el resultado sería NA.
+:::
+
+## Su turno (8 minutos)
+
+1. Filtren los datos de Puerto Rico y ordénenlos por año.
+2. ¿En qué año alcanzó Puerto Rico su mayor esperanza de vida? Usen `arrange(desc(life_expectancy))`.
+3. Calculen la fertilidad media por continente en 1970 y en 2010. Pista: `group_by(continent, year)`.
+
+::: {.notes}
+Copien el código de las diapositivas anteriores y modifíquenlo. Así se aprende: no escribiendo desde cero, sino cambiando código que ya funciona.
+:::
+
+## Paso 10: gráficos con `ggplot2`
+
+`ggplot2` construye gráficos por **capas**:
+
+| Componente | ¿Qué define? |
+|------------|---------------|
+| **Datos** | El conjunto que alimenta el gráfico |
+| **Estética** (`aes()`) | Qué variable va en cada eje, color o tamaño |
+| **Geometría** (`geom_...()`) | El tipo de gráfico: puntos, líneas, barras |
+
+::: {.notes}
+Como en la gramática, un gráfico tiene partes: los datos, qué variable va en cada eje y qué forma tiene. Cada signo de suma añade una capa.
+:::
+
+## Un gráfico paso a paso
+
+```{r}
+#| label: ggplot-básico
+#| fig-width: 8
+#| fig-height: 4.5
+gapminder |>
+  filter(year == 2010) |>
+  ggplot(aes(x = fertility, y = life_expectancy)) +
+  geom_point()
+```
+
+::: {.notes}
+Primero el lienzo con los ejes, luego los puntos. Cada punto es un país. Ya se ve el patrón: donde hay más hijos por mujer, la esperanza de vida es menor.
+:::
+
+## Añadir capas
+
+```{r}
+#| label: ggplot-capas
+#| fig-width: 9
+#| fig-height: 5
+gapminder |>
+  filter(year == 2010) |>
+  ggplot(aes(x = fertility, y = life_expectancy,
+             colour = continent, size = population / 10^6)) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Fertilidad y esperanza de vida, 2010",
+       x = "Hijos por mujer", y = "Esperanza de vida (años)",
+       colour = "Continente", size = "Población\n(millones)") +
+  theme_minimal()
+```
+
+::: {.notes}
+Ahora el color depende del continente y el tamaño de la población. alpha hace los puntos algo transparentes para que se vean los que se solapan. Siempre pongan títulos y etiquetas en español claro.
+:::
+
+## El Caribe en el tiempo
+
+```{r}
+#| label: caribe
+#| fig-width: 9
+#| fig-height: 4.5
+caribe <- c("Puerto Rico", "Cuba", "Dominican Republic", "Jamaica", "Haiti")
+
+gapminder |>
+  filter(country %in% caribe) |>
+  ggplot(aes(x = year, y = life_expectancy, colour = country)) +
+  geom_line(linewidth = 1.1) +
+  labs(title = "Esperanza de vida en el Caribe, 1960 a 2016",
+       x = "Año", y = "Esperanza de vida (años)", colour = "País") +
+  theme_minimal()
+```
+
+::: {.notes}
+Para series de tiempo usamos líneas. Fíjense en la caída de Haití alrededor de 2010, por el terremoto. Los datos cuentan historias, y el gráfico es la forma más rápida de verlas.
+:::
+
+## Su turno (8 minutos)
+
+1. Hagan el gráfico del Caribe con la **fertilidad** en lugar de la esperanza de vida.
+2. Añadan otro país que les interese.
+3. Guarden el gráfico con `ggsave("mi_gráfico.png", width = 8, height = 5)` y búsquenlo en el panel de archivos.
+
+::: {.notes}
+Aquí basta con cambiar una variable y un nombre en el vector. Cuando guarden el gráfico, va a aparecer en la carpeta del proyecto, que es justo para lo que sirve el proyecto.
+:::
+
+## Importar sus propios datos
+
+```{r}
+#| label: importar
+#| eval: false
+datos <- read_csv("datos/encuesta.csv")          # CSV (readr, del tidyverse)
+datos <- haven::read_sav("datos/encuesta.sav")   # SPSS
+datos <- haven::read_dta("datos/encuesta.dta")   # Stata
+datos <- readxl::read_excel("datos/encuesta.xlsx")  # Excel
+```
+
+Con el proyecto abierto, la ruta es relativa a su carpeta: basta con `datos/archivo`.
+
+::: {.notes}
+No vamos a correr esto hoy porque no tenemos sus archivos, pero es lo que van a necesitar en cuanto salgan de aquí. Hagan una carpeta llamada datos dentro del proyecto y pongan ahí sus archivos.
+:::
+
+## Paso 11: su primer documento de Quarto
+
+1. *File → New File → Quarto Document*. Título: «Mi primer informe». Formato: HTML.
+2. Escriban un párrafo y copien en un bloque de código el gráfico del Caribe.
+3. Opriman **Render**.
+
+. . .
+
+Prueben luego a cambiar `format: html` por `format: docx` y rendericen otra vez.
+
+::: {.notes}
+Con esto cerramos el círculo de la primera parte: el mismo código que escribieron en el script ahora vive en un documento que se puede compartir. Si cambian el formato a docx, sale un Word con el gráfico adentro.
+:::
+
+## Si queda tiempo: Git en RStudio
+
+- *Tools → Version Control → Project Setup*: escoger **Git** para el proyecto.
+- El panel **Git** muestra los archivos cambiados: marcarlos, escribir un mensaje y hacer **Commit**.
+- Para conectar con GitHub hace falta una cuenta y un *token*: [happygitwithr.com](https://happygitwithr.com/), capítulos 9 a 12.
+
+::: {.notes}
+Esto se los muestro en mi pantalla, no hace falta que lo hagan ahora. La configuración con GitHub toma un rato la primera vez, y vale la pena hacerla con calma siguiendo la guía.
+:::
+
+# Cierre {background-color="#e70033"}
+
+## Lo que hicimos hoy
+
+- Conocimos R, RStudio, Quarto y Git, y para qué sirve cada uno.
+- Creamos un proyecto y un script.
+- Usamos objetos, vectores, funciones y paquetes.
+- Transformamos datos con `dplyr` y graficamos con `ggplot2`.
+- Renderizamos un documento de Quarto.
+
+## Para seguir
+
+| Recurso | Para qué |
+|---------|----------|
+| [*R para la Ciencia de Datos*, 2.ª ed.](https://davidrsch.github.io/r4ds-es/) | Capítulos 1 a 8 (lo de hoy, con más calma) y 28 (Quarto) |
+| [Irizarry, *Introducción a la ciencia de datos*](https://rafalab.dfci.harvard.edu/dslibro/) | Capítulos 1, 2, 4 y 7 (R, `tidyverse` y `ggplot2`) y 39 y 40 (Git y proyectos) |
+| [Hojas de referencia de Posit](https://rstudio.github.io/cheatsheets/) | Una página por paquete, varias en español |
+| [Posit Cloud](https://posit.cloud/) | RStudio en el navegador, sin instalar nada |
+
+. . .
+
+**¡Gracias!** Preguntas y comentarios: rashid.marcano@upr.edu
+
+::: {.notes}
+Les recomiendo empezar por R para la Ciencia de Datos, que va en el mismo orden que hicimos hoy. Muchas gracias por madrugar un viernes.
+:::
