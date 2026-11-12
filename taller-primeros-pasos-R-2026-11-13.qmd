@@ -12,7 +12,7 @@ format:
     theme: [default, uprrp.scss]
     slide-number: true
     chalkboard: false
-    logo: "logos_combinados.png"
+    logo: "logos-combinados.png"
     footer: "Taller Introducción a R, CACCS, Facultad de Ciencias Sociales, UPR-RP"
     transition: slide
     background-transition: fade
@@ -153,7 +153,7 @@ Los materiales de mis talleres anteriores están en GitHub:
 Guía recomendada: [*Happy Git and GitHub for the useR*](https://happygitwithr.com/) (en inglés) y el capítulo 39 de Irizarry.
 
 ::: {.notes}
-Git sustituye la costumbre de guardar «tesis_final», «tesis_final2» y «tesis_final_ahora_sí». Cada versión queda guardada con una nota, y se puede volver atrás. Hoy no lo vamos a configurar, porque toma tiempo, pero si queda tiempo al final les enseño cómo se ve en RStudio.
+Git sustituye la costumbre de guardar «tesis final», «tesis final 2» y «tesis final ahora sí». Cada versión queda guardada con una nota, y se puede volver atrás. Hoy no lo vamos a configurar, porque toma tiempo, pero si queda tiempo al final les enseño cómo se ve en RStudio.
 :::
 
 ## Proyectos de RStudio
@@ -230,15 +230,15 @@ Vamos a hacer esto juntos. Abran RStudio y busquen los cuatro paneles. Después 
 ## Paso 2: crear un proyecto
 
 1. *File → New Project → New Directory → New Project*
-2. Nombre: `taller_r`. Ubicación: el Escritorio o Documentos.
+2. Nombre: `taller-r`. Ubicación: el Escritorio o Documentos.
 3. *Create Project*
 
 . . .
 
-Noten que RStudio se reinicia y que el panel de archivos muestra la carpeta nueva, con el archivo `taller_r.Rproj`.
+Noten que RStudio se reinicia y que el panel de archivos muestra la carpeta nueva, con el archivo `taller-r.Rproj`.
 
 ::: {.notes}
-Todos van a crear el mismo proyecto. Cuando terminen, el panel de abajo a la derecha debe mostrar la carpeta taller_r. Si alguien se queda atrás, levanten la mano y paso por su computadora.
+Todos van a crear el mismo proyecto. Cuando terminen, el panel de abajo a la derecha debe mostrar la carpeta taller-r. Si alguien se queda atrás, levanten la mano y paso por su computadora.
 :::
 
 ## Paso 3: R como calculadora
@@ -259,7 +259,7 @@ Empezamos por lo más simple. El acento circunflejo es el exponente y sqrt es la
 
 ## Paso 4: un script
 
-*File → New File → R Script*, y guárdenlo como `primeros_pasos.R`.
+*File → New File → R Script*, y guárdenlo como `primeros-pasos.R`.
 
 - Escriban el código en el script y ejecútenlo con **Ctrl + Enter** (Windows) o **Cmd + Return** (Mac).
 - Lo que va después de `#` es un **comentario**: R no lo ejecuta.
@@ -520,7 +520,7 @@ Para series de tiempo usamos líneas. Fíjense en la caída de Haití alrededor 
 
 1. Hagan el gráfico del Caribe con la **fertilidad** en lugar de la esperanza de vida.
 2. Añadan otro país que les interese.
-3. Guarden el gráfico con `ggsave("mi_gráfico.png", width = 8, height = 5)` y búsquenlo en el panel de archivos.
+3. Guarden el gráfico con `ggsave("mi-gráfico.png", width = 8, height = 5)` y búsquenlo en el panel de archivos.
 
 ::: {.notes}
 Aquí basta con cambiar una variable y un nombre en el vector. Cuando guarden el gráfico, va a aparecer en la carpeta del proyecto, que es justo para lo que sirve el proyecto.

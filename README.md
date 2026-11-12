@@ -8,10 +8,10 @@ Recurso: Dr. Rashid C. J. Marcano Rivera.
 
 | Archivo | Qué es |
 |---|---|
-| `taller_primeros_pasos_R_2026-11-13.html` | La presentación. Ábranla en el navegador; con la tecla `F` se ve en pantalla completa. |
-| `primeros_pasos.R` | El script del taller, paso a paso, con los ejercicios «Su turno». |
-| `taller_primeros_pasos_R_2026-11-13.qmd` | La fuente de la presentación en Quarto. |
-| `uprrp.scss`, `logos_combinados.png` | Tema y logos de la presentación. |
+| `taller-primeros-pasos-R-2026-11-13.html` | La presentación. Ábranla en el navegador; con la tecla `F` se ve en pantalla completa. |
+| `primeros-pasos.R` | El script del taller, paso a paso, con los ejercicios «Su turno». |
+| `taller-primeros-pasos-R-2026-11-13.qmd` | La fuente de la presentación en Quarto. |
+| `uprrp.scss`, `logos-combinados.png` | Tema y logos de la presentación. |
 
 ## Antes de empezar
 

@@ -104,7 +104,7 @@ gapminder |>
 # Su turno (8 minutos) ---------------------------------------------------------
 # 1. Hagan el gráfico del Caribe con la fertilidad en lugar de la esperanza de vida.
 # 2. Añadan otro país que les interese.
-# 3. Guárdenlo: ggsave("mi_gráfico.png", width = 8, height = 5)
+# 3. Guárdenlo: ggsave("mi-gráfico.png", width = 8, height = 5)
 
 
 # Importar sus propios datos (referencia; no se corre hoy) --------------------
