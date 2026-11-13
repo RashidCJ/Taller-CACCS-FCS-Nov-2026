@@ -196,7 +196,7 @@ No se trata de abandonar lo que saben. Si han trabajado con la sintaxis de SPSS 
 ### Cuando se atasquen
 
 - `?función` o `help(función)`: la ayuda de R
-- Las [hojas de referencia de Posit](https://rstudio.github.io/cheatsheets/), varias en español
+- Las [hojas de referencia de Posit](https://rstudio.github.io/cheatsheets/): las de `dplyr`, `ggplot2`, `tidyr`, `readr` y `readxl`, en español, están en la carpeta `hojas-de-referencia` del repositorio
 - Los capítulos de *R para la Ciencia de Datos* y de Irizarry
 :::
 
@@ -601,7 +601,7 @@ Esto se los muestro en mi pantalla, no hace falta que lo hagan ahora. La configu
 |---------|----------|
 | [*R para la Ciencia de Datos*, 2.ª ed.](https://davidrsch.github.io/r4ds-es/) | Capítulos 1 a 8 (lo de hoy, con más calma) y 28 (Quarto) |
 | [Irizarry, *Introducción a la ciencia de datos*](https://rafalab.dfci.harvard.edu/dslibro/) | Capítulos 1, 2, 4 y 7 (R, `tidyverse` y `ggplot2`) y 39 y 40 (Git y proyectos) |
-| [Hojas de referencia de Posit](https://rstudio.github.io/cheatsheets/) | Una página por paquete, varias en español |
+| [Hojas de referencia en español](https://github.com/RashidCJ/Taller-CACCS-FCS-Nov-2026/tree/main/hojas-de-referencia) | `dplyr`, `ggplot2`, `tidyr`, `readr` y `readxl`, dos páginas cada una; [más en el sitio de Posit](https://rstudio.github.io/cheatsheets/) |
 | [Posit Cloud](https://posit.cloud/) | RStudio en el navegador, sin instalar nada |
 
 . . .
