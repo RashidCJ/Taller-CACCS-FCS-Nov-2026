@@ -227,6 +227,24 @@ Abran RStudio. Tiene cuatro paneles:
 Vamos a hacer esto juntos. Abran RStudio y busquen los cuatro paneles. Después vamos a Tools, Global Options, y quitamos que R guarde y restaure el espacio de trabajo. Parece un detalle, pero evita que arrastren objetos viejos de una sesión a otra sin darse cuenta.
 :::
 
+## Tildes y eñes: UTF-8
+
+R acepta `año`, `educación` o `niño` en nombres de objetos y columnas, siempre que el archivo esté en **UTF-8**.
+
+::: callout-important
+### Otra configuración, también una sola vez
+
+*Tools → Global Options → Code → Saving → Default text encoding*: escojan **UTF-8**. Desde entonces, todo script nuevo se guarda en UTF-8.
+:::
+
+. . .
+
+Si abren un script viejo y ven símbolos raros (`Ã±` en lugar de `ñ`, `Ã³` en lugar de `ó`), reábranlo con *File → Reopen with Encoding → UTF-8*.
+
+::: {.notes}
+Aprovechamos que estamos en Global Options para fijar la codificación. Escribimos en español, y queremos escribir «año» y no «anio». Con UTF-8, las tildes y las eñes funcionan en los scripts, en los nombres de las variables y en los gráficos. Si alguna vez abren un archivo y las eñes salen como símbolos raros, no es que el archivo se dañó: se abrió con otra codificación, y se arregla reabriéndolo en UTF-8.
+:::
+
 ## Paso 2: crear un proyecto
 
 1. *File → New Project → New Directory → New Project*

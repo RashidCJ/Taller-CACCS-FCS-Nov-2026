@@ -1483,6 +1483,39 @@ display:block!important;
 }</style></aside>
 </div>
 </section>
+<section id="tildes-y-eñes-utf-8" class="slide level2">
+<h2>Tildes y eñes: UTF-8</h2>
+<p>R acepta <code>año</code>, <code>educación</code> o <code>niño</code> en nombres de objetos y columnas, siempre que el archivo esté en <strong>UTF-8</strong>.</p>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Otra configuración, también una sola vez</strong></p>
+</div>
+<div class="callout-content">
+<p><em>Tools → Global Options → Code → Saving → Default text encoding</em>: escojan <strong>UTF-8</strong>. Desde entonces, todo script nuevo se guarda en UTF-8.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Si abren un script viejo y ven símbolos raros (<code>Ã±</code> en lugar de <code>ñ</code>, <code>Ã³</code> en lugar de <code>ó</code>), reábranlo con <em>File → Reopen with Encoding → UTF-8</em>.</p>
+<aside class="notes">
+<p>Aprovechamos que estamos en Global Options para fijar la codificación. Escribimos en español, y queremos escribir «año» y no «anio». Con UTF-8, las tildes y las eñes funcionan en los scripts, en los nombres de las variables y en los gráficos. Si alguna vez abren un archivo y las eñes salen como símbolos raros, no es que el archivo se dañó: se abrió con otra codificación, y se arregla reabriéndolo en UTF-8.</p>
+<style type="text/css">
+span.MJX_Assistive_MathML {
+position:absolute!important;
+clip: rect(1px, 1px, 1px, 1px);
+padding: 1px 0 0 0!important;
+border: 0!important;
+height: 1px!important;
+width: 1px!important;
+overflow: hidden!important;
+display:block!important;
+}</style></aside>
+</div>
+</section>
 <section id="paso-2-crear-un-proyecto" class="slide level2 scrollable">
 <h2>Paso 2: crear un proyecto</h2>
 <ol type="1">

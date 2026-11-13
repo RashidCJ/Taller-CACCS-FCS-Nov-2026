@@ -5,6 +5,8 @@
 # Dr. Rashid C. J. Marcano Rivera
 #
 # Ejecuten cada línea con Ctrl + Enter (Windows) o Cmd + Return (Mac).
+# Si ven símbolos raros en lugar de tildes o eñes, reabran el archivo con
+# File > Reopen with Encoding > UTF-8.
 # ---------------------------------------------------------------------------
 
 # Paso 3: R como calculadora -------------------------------------------------
